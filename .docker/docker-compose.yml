@@ -1,0 +1,22 @@
+version: '3'
+services:
+    ci4-web:
+        build:
+            context: ./php
+        ports:
+            - 80:80
+        volumes:
+            - ../app:/var/www/html/app/
+        links:
+            - 'mysql'
+        container_name: ci4-contact-manager
+    mysql:
+        container_name: ci4-contact-manager-db
+        image: mysql:8.0.19
+        volumes:
+            - ./db:/var/lib/mysql
+        command: --default-authentication-plugin=mysql_native_password
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
